@@ -15,7 +15,7 @@
       │    │    ├── 📁 utils, Sabattini
       │    │    │    └── 📄 HibernateUtil.java  <-- Utility: avvia la connessione al DB
       │    │    │
-      │    │    ├── 📁 dao, Vignali
+      │    │    ├── 📁 dao, Vignali e Butt
       │    │    │    ├── 📄 CategoryDAO.java    <-- Logica: legge le categorie per la tendina
       │    │    │    └── 📄 ProductDAO.java     <-- Logica: fa i 4 operativi CRUD sui prodotti
       │    │    │
