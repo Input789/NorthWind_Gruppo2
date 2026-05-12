@@ -1,0 +1,49 @@
+{
+  "name": "NorthWind Entity Manager",
+  "image": "mcr.microsoft.com/devcontainers/java:21-maven",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "remoteUser": "vscode",
+  "forwardPorts": [8080, 8081],
+  "postCreateCommand": "apt-get update && apt-get install -y sqlite3 && mvn clean install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-maven",
+        "humao.rest-client",
+        "ms-vscode.makefile-tools",
+        "ritwickdey.liveserver",
+        "streetsidesoftware.code-spell-checker",
+        "streetsidesoftware.code-spell-checker-italian",
+        "alexcvzz.vscode-sqlite"
+      ],
+      "settings": {
+        "maven.executable.preferMavenWrapper": true,
+        "[java]": {
+          "editor.defaultFormatter": "redhat.java",
+          "editor.formatOnSave": true
+        },
+        "java.configuration.updateBuildConfiguration": "automatic",
+        "java.test.defaultConfig": "maven"
+      }
+    }
+  },
+  "portsAttributes": {
+    "8080": {
+      "label": "Tomcat Application",
+      "onAutoForward": "notify"
+    },
+    "8081": {
+      "label": "Debug Port",
+      "onAutoForward": "silent"
+    }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.m2,target=/home/vscode/.m2,type=bind,consistency=cached"
+  ],
+  "remoteEnv": {
+    "MAVEN_OPTS": "-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true"
+  }
+}
