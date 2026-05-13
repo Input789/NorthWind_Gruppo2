@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.northwind.gruppo2.models.Category;
 import it.northwind.gruppo2.models.Product;
+import it.northwind.gruppo2.utils.HibernateUtil;
+import org.hibernate.SessionFactory;
 import jakarta.persistence.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,18 +22,16 @@ public class ProductServlet extends HttpServlet {
     
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
-    private EntityManagerFactory emf;
+    private SessionFactory sessionFactory;
     
     @Override
     public void init() throws ServletException {
-        emf = Persistence.createEntityManagerFactory("default");
+        sessionFactory = HibernateUtil.getSessionFactory();
     }
     
     @Override
     public void destroy() {
-        if (emf != null && emf.isOpen()) {
-            emf.close();
-        }
+        // HibernateUtil gestisce la chiusura globale
     }
     
     @Override
@@ -44,7 +44,7 @@ public class ProductServlet extends HttpServlet {
         String idParam = request.getParameter("id");
         
         try {
-            EntityManager em = emf.createEntityManager();
+            EntityManager em = sessionFactory.openSession();
             
             if (idParam != null) {
                 // GET singolo prodotto per ID
