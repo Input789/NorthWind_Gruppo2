@@ -14,6 +14,8 @@ public final class HibernateUtil {
         try {
             return new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
+            System.err.println("\n🔥 ERRORE VERO DI HIBERNATE QUI SOTTO: 🔥");
+            ex.printStackTrace(); // AGGIUNGI QUESTA RIGA!
             throw new IllegalStateException("Errore durante l'avvio di Hibernate", ex);
         }
     }
