@@ -1,12 +1,12 @@
 {
   "name": "NorthWind Entity Manager",
-  "image": "mcr.microsoft.com/devcontainers/java:21-maven",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bullseye",
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
   "remoteUser": "vscode",
   "forwardPorts": [8080, 8081],
-  "postCreateCommand": "apt-get update && apt-get install -y sqlite3 && mvn clean install",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y --no-install-recommends maven sqlite3 && mvn clean install",
   "customizations": {
     "vscode": {
       "extensions": [
