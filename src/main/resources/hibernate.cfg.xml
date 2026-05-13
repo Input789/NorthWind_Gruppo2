@@ -7,7 +7,7 @@
     <session-factory>
         <property name="connection.driver_class">org.sqlite.JDBC</property>
         
-        <property name="connection.url">jdbc:sqlite:Northwind.db</property>
+        <property name="connection.url">jdbc:sqlite:northwind.db</property>
         <property name="connection.username"></property>
         <property name="connection.password"></property>
 
@@ -17,10 +17,10 @@
         <property name="format_sql">true</property>
         <property name="highlight_sql">true</property>
 
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">none</property>
 
-        <mapping class="it.northwind.models.Category"/>
-        <mapping class="it.northwind.models.Product"/>
+        <mapping class="it.northwind.gruppo2.models.Category"/>
+        <mapping class="it.northwind.gruppo2.models.Product"/>
 
     </session-factory>
 </hibernate-configuration>
