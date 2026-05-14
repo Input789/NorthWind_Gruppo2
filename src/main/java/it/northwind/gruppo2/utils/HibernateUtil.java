@@ -3,23 +3,29 @@ package it.northwind.gruppo2.utils;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class HibernateUtil {
-    private static SessionFactory sessionFactory;
+public final class HibernateUtil {
 
-    static {
+    private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
+
+    private HibernateUtil() {
+    }
+
+    private static SessionFactory buildSessionFactory() {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            return new Configuration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            System.err.println("Inizializzazione SessionFactory fallita." + ex);
-            throw new ExceptionInInitializerError(ex);
+            System.err.println("\n🔥 ERRORE VERO DI HIBERNATE QUI SOTTO: 🔥");
+            ex.printStackTrace();
+            throw new IllegalStateException("Errore durante l'avvio di Hibernate", ex);
         }
     }
 
     public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+        return SESSION_FACTORY;
     }
 
     public static void shutdown() {
         getSessionFactory().close();
     }
 }
+

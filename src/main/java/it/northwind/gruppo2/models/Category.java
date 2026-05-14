@@ -22,11 +22,8 @@ public class Category {
     @Column(name = "Description")
     private String description;
 
-    // Il tipo BLOB in SQLite si mappa come array di byte in Java.
-    // @Lob indica a Hibernate che è un "Large Object" (dati pesanti).
-    //In pratica è per gestire picture che è una foto guardando da DBeaver, aiutino di Gemini su come gestire le foto
-    @Lob 
-    @Column(name = "Picture")
+    // Picture e' un BLOB non necessario al CRUD prodotti; lo escludiamo dal mapping Hibernate.
+    @Transient
     private byte[] picture;
 
     // Costruttore vuoto (Obbligatorio per Hibernate a quanto pare)
