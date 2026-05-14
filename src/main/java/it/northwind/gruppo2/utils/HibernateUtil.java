@@ -28,4 +28,3 @@ public final class HibernateUtil {
         getSessionFactory().close();
     }
 }
-
