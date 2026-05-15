@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NorthWind - CRUD prodotti e categorie</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>NorthWind Database</h1>
+            <p class="subtitle">Interfaccia CRUD completa per prodotti e categorie</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="products">
+                <span class="tab-icon">P</span> Prodotti
+            </button>
+            <button class="tab-button" data-tab="categories">
+                <span class="tab-icon">C</span> Categorie
+            </button>
+        </div>
+
+        <section id="products" class="tab-content active">
+            <div class="section-header">
+                <h2>Gestione prodotti</h2>
+                <div class="filter-group">
+                    <input
+                        type="number"
+                        id="productSearchId"
+                        placeholder="Cerca prodotto per ID"
+                        min="1"
+                        class="filter-input"
+                    >
+                    <button id="searchProductBtn" class="btn btn-primary">Cerca</button>
+                    <button id="loadAllProductsBtn" class="btn btn-secondary">Carica tutti</button>
+                    <button id="newProductBtn" class="btn btn-secondary">Nuovo prodotto</button>
+                </div>
+            </div>
+
+            <div id="productsFeedback" class="status-message"></div>
+
+            <div class="section-layout">
+                <div class="crud-card">
+                    <div class="card-heading">
+                        <h3>Form prodotto</h3>
+                        <span id="productFormMode" class="mode-badge">Modalita': inserimento</span>
+                    </div>
+
+                    <form id="productForm" class="form-grid">
+                        <input type="hidden" id="productId">
+
+                        <label class="field">
+                            <span>Nome prodotto</span>
+                            <input type="text" id="productName" required>
+                        </label>
+
+                        <label class="field">
+                            <span>Supplier ID</span>
+                            <input type="number" id="productSupplierId" min="1">
+                        </label>
+
+                        <label class="field">
+                            <span>Categoria</span>
+                            <select id="productCategoryId">
+                                <option value="">Nessuna categoria</option>
+                            </select>
+                        </label>
+
+                        <label class="field">
+                            <span>Prezzo</span>
+                            <input type="number" id="productUnitPrice" min="0" step="0.01">
+                        </label>
+
+                        <label class="field">
+                            <span>Quantita' per unita'</span>
+                            <input type="text" id="productQuantityPerUnit">
+                        </label>
+
+                        <label class="field">
+                            <span>Unita' in magazzino</span>
+                            <input type="number" id="productUnitsInStock" min="0">
+                        </label>
+
+                        <label class="field">
+                            <span>Unita' ordinate</span>
+                            <input type="number" id="productUnitsOnOrder" min="0">
+                        </label>
+
+                        <label class="field">
+                            <span>Livello riordino</span>
+                            <input type="number" id="productReorderLevel" min="0">
+                        </label>
+
+                        <label class="field">
+                            <span>Discontinued</span>
+                            <select id="productDiscontinued">
+                                <option value="">Vuoto</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                            </select>
+                        </label>
+
+                        <div class="form-actions field-full">
+                            <button type="submit" id="saveProductBtn" class="btn btn-primary">Salva prodotto</button>
+                            <button type="button" id="cancelProductEditBtn" class="btn btn-secondary">Annulla modifica</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-card">
+                    <div class="card-heading">
+                        <h3>Elenco prodotti</h3>
+                        <span class="muted">Usa i pulsanti in tabella per modificare o eliminare</span>
+                    </div>
+
+                    <div class="loading" id="productsLoading">
+                        <div class="spinner"></div>
+                        <p>Caricamento in corso...</p>
+                    </div>
+
+                    <div class="table-shell">
+                        <table id="productsTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Supplier</th>
+                                    <th>Categoria</th>
+                                    <th>Prezzo</th>
+                                    <th>Quantita'</th>
+                                    <th>Stock</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsBody">
+                                <tr class="empty-state">
+                                    <td colspan="8">Clicca su "Carica tutti" per visualizzare i prodotti</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="categories" class="tab-content">
+            <div class="section-header">
+                <h2>Gestione categorie</h2>
+                <div class="filter-group">
+                    <input
+                        type="number"
+                        id="categorySearchId"
+                        placeholder="Cerca categoria per ID"
+                        min="1"
+                        class="filter-input"
+                    >
+                    <button id="searchCategoryBtn" class="btn btn-primary">Cerca</button>
+                    <button id="loadAllCategoriesBtn" class="btn btn-secondary">Carica tutte</button>
+                    <button id="newCategoryBtn" class="btn btn-secondary">Nuova categoria</button>
+                </div>
+            </div>
+
+            <div id="categoriesFeedback" class="status-message"></div>
+
+            <div class="section-layout">
+                <div class="crud-card">
+                    <div class="card-heading">
+                        <h3>Form categoria</h3>
+                        <span id="categoryFormMode" class="mode-badge">Modalita': inserimento</span>
+                    </div>
+
+                    <form id="categoryForm" class="form-grid">
+                        <input type="hidden" id="categoryId">
+
+                        <label class="field">
+                            <span>Nome categoria</span>
+                            <input type="text" id="categoryName" required>
+                        </label>
+
+                        <label class="field field-full">
+                            <span>Descrizione</span>
+                            <textarea id="categoryDescription" rows="5"></textarea>
+                        </label>
+
+                        <div class="form-actions field-full">
+                            <button type="submit" id="saveCategoryBtn" class="btn btn-primary">Salva categoria</button>
+                            <button type="button" id="cancelCategoryEditBtn" class="btn btn-secondary">Annulla modifica</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="table-card">
+                    <div class="card-heading">
+                        <h3>Elenco categorie</h3>
+                        <span class="muted">Le categorie sono disponibili anche nel form prodotto</span>
+                    </div>
+
+                    <div class="loading" id="categoriesLoading">
+                        <div class="spinner"></div>
+                        <p>Caricamento in corso...</p>
+                    </div>
+
+                    <div class="table-shell">
+                        <table id="categoriesTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Descrizione</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoriesBody">
+                                <tr class="empty-state">
+                                    <td colspan="4">Clicca su "Carica tutte" per visualizzare le categorie</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>NorthWind Gruppo 2 - CRUD web con Tomcat, Servlet e Hibernate</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
