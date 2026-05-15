@@ -1,1 +1,0 @@
-come funziona una servlet, come funziona jdbc, come funziona hibernate, come funziona un orm, come funzionano le api rest
